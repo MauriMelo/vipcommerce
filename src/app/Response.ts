@@ -10,6 +10,8 @@ export default class BaseController {
 
   static INTERNAL_SERVER_ERROR = 500;
 
+  static BAD_REQUEST = 400;
+
   static response(status: number, data: any, message?: string): IResponse {
     return {
       status,
