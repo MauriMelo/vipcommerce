@@ -1,26 +1,26 @@
 import { Router } from 'express';
-import ClientesController from './controllers/ClientesController';
-import PedidosController from './controllers/PedidosController';
-import ProdutosController from './controllers/ProdutosController';
+import CustomersController from './controllers/CustomersController';
+import OrdersController from './controllers/OrdersController';
+import ProductsController from './controllers/ProductsController';
 
 const router = Router();
 
-router.get('/clientes', ClientesController.index);
-router.get('/clientes/:id', ClientesController.show);
-router.post('/clientes/', ClientesController.create);
-router.put('/clientes/:id', ClientesController.update);
-router.delete('/clientes/:id', ClientesController.delete);
+router.get('/clientes', CustomersController.index);
+router.get('/clientes/:id', CustomersController.show);
+router.post('/clientes/', CustomersController.create);
+router.put('/clientes/:id', CustomersController.update);
+router.delete('/clientes/:id', CustomersController.delete);
 
-router.get('/produtos', ProdutosController.index);
-router.get('/produtos/:id', ProdutosController.show);
-router.post('/produtos/', ProdutosController.create);
-router.put('/produtos/:id', ProdutosController.update);
-router.delete('/produtos/:id', ProdutosController.delete);
+router.get('/produtos', ProductsController.index);
+router.get('/produtos/:id', ProductsController.show);
+router.post('/produtos/', ProductsController.create);
+router.put('/produtos/:id', ProductsController.update);
+router.delete('/produtos/:id', ProductsController.delete);
 
-router.get('/pedidos', PedidosController.index);
-router.get('/pedidos/:id', PedidosController.show);
-router.post('/pedidos/', PedidosController.create);
-router.put('/pedidos/:id', PedidosController.update);
-router.delete('/pedidos/:id', PedidosController.delete);
+router.get('/pedidos', OrdersController.index);
+router.get('/pedidos/:id', OrdersController.show);
+router.post('/pedidos/', OrdersController.create);
+router.put('/pedidos/:id', OrdersController.update);
+router.delete('/pedidos/:id', OrdersController.delete);
 
 export default router;

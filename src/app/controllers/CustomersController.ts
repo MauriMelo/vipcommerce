@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-export default class PedidosController {
+export default class CustomersController {
   static index(request: Request, response: Response) {
     return response.json({});
   }
@@ -18,14 +18,6 @@ export default class PedidosController {
   }
 
   static delete(request: Request, response: Response) {
-    return response.json({});
-  }
-
-  static email(request: Request, response: Response) {
-    return response.json({});
-  }
-
-  static report(request: Request, response: Response) {
     return response.json({});
   }
 }
