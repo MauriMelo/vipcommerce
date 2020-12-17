@@ -49,13 +49,15 @@ export default class ProductsController {
     try {
       await schema.validate(request.body);
     } catch (err) {
-      return response.json(
-        Response.errorResponse(
-          Response.BAD_REQUEST,
-          'Requisição inválida',
-          err.message
-        )
-      );
+      return response
+        .status(Response.BAD_REQUEST)
+        .json(
+          Response.errorResponse(
+            Response.BAD_REQUEST,
+            'Requisição inválida',
+            err.message
+          )
+        );
     }
 
     try {
@@ -77,22 +79,24 @@ export default class ProductsController {
     const { id } = request.params;
 
     const schema = Yup.object().shape({
-      nome: Yup.string().required(),
+      nome: Yup.string(),
       cor: Yup.string(),
       tamanho: Yup.string(),
-      valor: Yup.number().required(),
+      valor: Yup.number(),
     });
 
     try {
       await schema.validate(request.body);
     } catch (err) {
-      return response.json(
-        Response.errorResponse(
-          Response.BAD_REQUEST,
-          'Requisição inválida',
-          err.message
-        )
-      );
+      return response
+        .status(Response.BAD_REQUEST)
+        .json(
+          Response.errorResponse(
+            Response.BAD_REQUEST,
+            'Requisição inválida',
+            err.message
+          )
+        );
     }
 
     try {

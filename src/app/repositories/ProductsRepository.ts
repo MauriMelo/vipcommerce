@@ -10,6 +10,7 @@ export default class ProductsRepository {
       });
       return products;
     } catch (err) {
+      console.log(err);
       throw new ProductsException(
         Response.INTERNAL_SERVER_ERROR,
         'Falha ao encontrar produtos.'
@@ -35,8 +36,11 @@ export default class ProductsRepository {
   static async update(id: number, data: IProduct) {
     const product = await this.find(id);
     try {
-      const update = await product.update(data);
-      return update;
+      await product.update(data);
+      return {
+        ...data,
+        id,
+      };
     } catch (err) {
       throw new ProductsException(
         Response.INTERNAL_SERVER_ERROR,
@@ -48,7 +52,9 @@ export default class ProductsRepository {
   static async find(id: number) {
     let product;
     try {
-      product = (await Product.findByPk(id)) as IProduct;
+      product = (await Product.findByPk(id, {
+        attributes: ['id', 'nome', 'cor', 'valor', 'tamanho'],
+      })) as IProduct;
     } catch (err) {
       throw new ProductsException(
         Response.INTERNAL_SERVER_ERROR,

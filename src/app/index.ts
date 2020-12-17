@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express';
 import database from '../database';
 import router from './routes';
 
-export default class App {
+class App {
   public server;
 
   public database;
@@ -25,3 +25,5 @@ export default class App {
     });
   }
 }
+
+export default new App();

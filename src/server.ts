@@ -1,6 +1,5 @@
 import './bootstrap';
 
-import App from './app';
+import app from './app';
 
-const app = new App();
 app.server.listen(8080);
