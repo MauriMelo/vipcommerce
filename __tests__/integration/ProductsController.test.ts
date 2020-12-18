@@ -9,20 +9,22 @@ describe('ProductsController', () => {
   });
 
   it('lista produtos', async () => {
-    const produtos = [
-      {
-        nome: 'Camisa 1',
-        valor: 12.99,
-        cor: 'vermelho',
-        tamanho: 'GG',
-      },
-    ];
-
-    await Product.bulkCreate(produtos);
+    const produto = {
+      nome: 'Camisa 1',
+      valor: 12.99,
+      cor: 'vermelho',
+      tamanho: 'GG',
+    };
+    await Product.bulkCreate([produto]);
 
     const response = await request(app.server).get('/produtos').send();
     expect(response.status).toBe(200);
-    expect(response.body.data).toStrictEqual(produtos);
+    expect(response.body.data).toStrictEqual([
+      {
+        ...produto,
+        id: 1,
+      },
+    ]);
   });
 
   it('obter produto', async () => {

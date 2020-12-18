@@ -1,8 +1,9 @@
+import { number } from 'yup/lib/locale';
 import OrdersException from './OrdersException';
 import Response from '../../Response';
 import Order, { IOrder } from '../../models/Order';
 import CustomerRepository from '../Customers/CustomersRepository';
-import OrderItem from '../../models/OrderItem';
+import OrderItem, { IOrderItem } from '../../models/OrderItem';
 import Product from '../../models/Product';
 
 export default class OrdersRepository {
@@ -36,6 +37,17 @@ export default class OrdersRepository {
     }
   }
 
+  static removeDuplicates(items: IOrderItem[]) {
+    const ids: number[] = [];
+    return items.filter((i) => {
+      if (ids.indexOf(i.id_produto) === -1) {
+        ids.push(i.id_produto);
+        return true;
+      }
+      return false;
+    });
+  }
+
   static async create(newOrder: IOrder) {
     // busca pelo cliente se não existir então dispara exception
     await CustomerRepository.find(newOrder.id_cliente);
@@ -47,7 +59,7 @@ export default class OrdersRepository {
     });
 
     // verifica se todos os produtos incluidos estão cadastrados
-    if (count !== newOrder.items.length) {
+    if (count !== OrdersRepository.removeDuplicates(newOrder.items).length) {
       throw new OrdersException(
         Response.BAD_REQUEST,
         'Produto incluido não encontrado'
@@ -79,20 +91,24 @@ export default class OrdersRepository {
     const order = await this.find(id);
 
     // busca pelo cliente se não encontrar então dispara exception
-    CustomerRepository.find(data.id_cliente);
-
-    const { count } = await Product.findAndCountAll({
-      where: {
-        id: data.items.map((i) => i.id_produto),
-      },
-    });
+    if (data.id_cliente) {
+      CustomerRepository.find(data.id_cliente);
+    }
 
     // verifica se todos os produtos incluidos estão cadastrados
-    if (count !== data.items.length) {
-      throw new OrdersException(
-        Response.BAD_REQUEST,
-        'Produto incluido não encontrado'
-      );
+    if (Array.isArray(data.items)) {
+      const { count } = await Product.findAndCountAll({
+        where: {
+          id: data.items.map((i) => i.id_produto),
+        },
+      });
+
+      if (count !== data.items.length) {
+        throw new OrdersException(
+          Response.BAD_REQUEST,
+          'Produto incluido não encontrado'
+        );
+      }
     }
 
     try {

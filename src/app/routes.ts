@@ -23,4 +23,7 @@ router.post('/pedidos/', OrdersController.create);
 router.put('/pedidos/:id', OrdersController.update);
 router.delete('/pedidos/:id', OrdersController.delete);
 
+router.post('/pedidos/:id/sendmail', OrdersController.email);
+router.post('/pedidos/:id/report', OrdersController.report);
+
 export default router;

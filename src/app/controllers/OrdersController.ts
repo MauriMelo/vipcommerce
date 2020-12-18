@@ -1,5 +1,7 @@
 import * as Yup from 'yup';
 import { Request, Response as ResponseExpress } from 'express';
+import moment from 'moment';
+import Mail from '../libs/Mail';
 import Response from '../Response';
 import OrdersRepository from '../repositories/Orders/OrdersRepository';
 import OrdersException from '../repositories/Orders/OrdersException';
@@ -164,7 +166,68 @@ export default class OrdersController {
   }
 
   static async email(request: Request, response: ResponseExpress) {
-    return response.json({});
+    const { id } = request.params;
+    let order;
+    try {
+      order = (await OrdersRepository.find(parseInt(id, 10))) as any;
+    } catch (err) {
+      if (err instanceof OrdersException) {
+        return response
+          .status(err.code)
+          .json(Response.errorResponse(err.code, err.message));
+      }
+      return response
+        .status(Response.INTERNAL_SERVER_ERROR)
+        .json(Response.errorResponse());
+    }
+
+    let pagamento;
+    if (order.forma_pagamento === 1) {
+      pagamento = 'dinheiro';
+    } else if (order.forma_pagamento === 2) {
+      pagamento = 'cartão';
+    } else {
+      pagamento = 'cheque';
+    }
+
+    try {
+      await Mail.sendMail({
+        to: `${order.customer.nome} <${order.customer.email}>`,
+        subject: 'Novo pedido criado',
+        template: 'order',
+        context: {
+          order: {
+            forma_pagamento: pagamento,
+            data: moment(order.data).format('DD/MM/YYYY'),
+            observacao: order.observacao,
+          },
+          items: order.items.map((i: any) => ({
+            nome: i.product.nome,
+            valor: i.product.valor.toLocaleString(),
+            quantidade: i.quantidade,
+          })),
+          customer: {
+            nome: order.customer.nome,
+            sexo: order.customer.sexo === 'm' ? 'Masculino' : 'Feminino',
+            cpf: order.customer.cpf,
+            email: order.customer.email,
+          },
+          total: order.items
+            .reduce(
+              (total: number, i: any) => total + i.product.valor * i.quantidade,
+              0
+            )
+            .toLocaleString(),
+        },
+      });
+      return response.json(
+        Response.response(Response.OK, 'Novo pedido enviado por email')
+      );
+    } catch (err) {
+      return response
+        .status(Response.INTERNAL_SERVER_ERROR)
+        .json(Response.errorResponse());
+    }
   }
 
   static async report(request: Request, response: ResponseExpress) {

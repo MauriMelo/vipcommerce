@@ -6,7 +6,7 @@ export interface ICustomer extends Model {
   nome: string;
   cpf: string;
   sexo: string;
-  email: number;
+  email: string;
 }
 
 // And with a functional approach defining a module looks like this

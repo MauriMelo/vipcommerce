@@ -1,0 +1,52 @@
+<table>
+    <tbody>
+      <tr>
+        <td style="font-size: 28px;font-weight: 600;padding: 10px 0;">
+          Dados do pedido
+        </td>
+      </tr>
+      <tr>
+        {{#with order}}
+        <td>
+          <strong>Data</strong>: {{ data }}<br />
+          <strong>Forma de pagamento</strong>: {{ forma_pagamento }}<br />
+          <strong>Observação</strong>: {{ observacao }}<br />
+        </td>
+        {{/with}}
+      </tr>
+      <tr>
+        <td style="font-size: 28px;font-weight: 600;padding: 10px 0;">
+          Cliente
+        </td>
+      </tr>
+      <tr>
+        <td>
+          {{#with customer}}
+          <strong>Nome</strong>: {{ nome }}<br />
+          <strong>E-mail</strong>: {{ email }}<br />
+          <strong>Cpf</strong>: {{ cpf }}<br />
+          <strong>Sexo</strong>: {{sexo}}<br />
+          {{/with}}
+        </td>
+      </tr>
+      <tr>
+        <td style="font-size: 28px;font-weight: 600;padding: 10px 0;">
+          Itens
+        </td>
+      </tr>
+      {{#each items as |item|}}
+          <tr>
+            <td>
+              <strong>Produto</strong>: {{ item.nome }}<br />
+              <strong>Valor</strong>: R$ {{ item.valor }}<br />
+              <strong>Quantidade</strong>: {{ item.quantidade }}<br />
+            </td>
+          </tr>
+      {{/each}}
+      <tr>
+        <td>
+          <strong>Total</strong>: R$ {{ total }}<br />
+        </td>
+      </tr>
+  </tbody>
+</table>

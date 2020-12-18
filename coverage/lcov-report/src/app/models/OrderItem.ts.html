@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/app/routes.ts</title>
+    <title>Code coverage report for src/app/models/OrderItem.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/app</a> routes.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/models</a> OrderItem.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/26</span>
+                <span class='fraction'>30/30</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/26</span>
+                <span class='fraction'>30/30</span>
             </div>
         
             
@@ -83,7 +83,11 @@
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -109,32 +113,40 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Router } from 'express';
-import CustomersController from './controllers/CustomersController';
-import OrdersController from './controllers/OrdersController';
-import ProductsController from './controllers/ProductsController';
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { DataTypes, Model } from 'sequelize';
+import database from '../../database';
+import Product from './Product';
 &nbsp;
-const router = Router();
+export interface IOrderItem extends Model {
+  id_pedido: number;// eslint-disable-line
+  id_produto: number;// eslint-disable-line
+  quantidade: string;
+}
 &nbsp;
-router.get('/clientes', CustomersController.index);
-router.get('/clientes/:id', CustomersController.show);
-router.post('/clientes/', CustomersController.create);
-router.put('/clientes/:id', CustomersController.update);
-router.delete('/clientes/:id', CustomersController.delete);
+// And with a functional approach defining a module looks like this
+const OrderItem = database.sequelize.define(
+  'OrderItem',
+  {
+    quantidade: {
+      type: new DataTypes.NUMBER(),
+    },
+  },
+  {
+    tableName: 'order_items',
+    timestamps: false,
+  }
+);
 &nbsp;
-router.get('/produtos', ProductsController.index);
-router.get('/produtos/:id', ProductsController.show);
-router.post('/produtos/', ProductsController.create);
-router.put('/produtos/:id', ProductsController.update);
-router.delete('/produtos/:id', ProductsController.delete);
+OrderItem.belongsTo(Product, {
+  foreignKey: 'id_produto',
+  as: 'product',
+});
 &nbsp;
-router.get('/pedidos', OrdersController.index);
-router.get('/pedidos/:id', OrdersController.show);
-router.post('/pedidos/', OrdersController.create);
-router.put('/pedidos/:id', OrdersController.update);
-router.delete('/pedidos/:id', OrdersController.delete);
-&nbsp;
-export default router;
+export default OrderItem;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -145,14 +157,14 @@ export default router;
                 at Fri Dec 18 2020 16:20:40 GMT-0300 (GMT-03:00)
             </div>
         </div>
-        <script src="../../prettify.js"></script>
+        <script src="../../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
     </body>
 </html>
     
