@@ -57,7 +57,7 @@ export default class CustomersRepository {
     } catch (err) {
       throw new CustomersException(
         Response.INTERNAL_SERVER_ERROR,
-        'Falha ao buscar produto.'
+        'Falha ao buscar cliente.'
       );
     }
 
