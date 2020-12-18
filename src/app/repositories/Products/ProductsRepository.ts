@@ -1,6 +1,6 @@
-import Product, { IProduct } from '../models/Product';
+import Product, { IProduct } from '../../models/Product';
 import ProductsException from './ProductsException';
-import Response from '../Response';
+import Response from '../../Response';
 
 export default class ProductsRepository {
   static async findAll() {
@@ -10,7 +10,6 @@ export default class ProductsRepository {
       });
       return products;
     } catch (err) {
-      console.log(err);
       throw new ProductsException(
         Response.INTERNAL_SERVER_ERROR,
         'Falha ao encontrar produtos.'

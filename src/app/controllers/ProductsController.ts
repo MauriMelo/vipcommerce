@@ -1,8 +1,8 @@
 import { Request, Response as ResponseExpress } from 'express';
 import * as Yup from 'yup';
 import Response from '../Response';
-import ProductsRepository from '../repositories/ProductsRepository';
-import ProductsException from '../repositories/ProductsException';
+import ProductsRepository from '../repositories/Products/ProductsRepository';
+import ProductsException from '../repositories/Products/ProductsException';
 
 export default class ProductsController {
   static async index(request: Request, response: ResponseExpress) {

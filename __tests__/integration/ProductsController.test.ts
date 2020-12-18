@@ -43,14 +43,6 @@ describe('ProductsController', () => {
   });
 
   it('obter produto não cadastrado', async () => {
-    const produto = {
-      nome: 'Camisa 1',
-      valor: 12.99,
-      cor: 'vermelho',
-      tamanho: 'GG',
-    };
-    await Product.create(produto);
-
     const response = await request(app.server).get('/produtos/1').send();
     expect(response.status).toBe(404);
     expect(response.body.message).toBe('Produto não encontrado.');
