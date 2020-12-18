@@ -1,4 +1,4 @@
-export default class CustomersException {
+export default class OrdersException {
   public code = 500;
 
   public message: string;

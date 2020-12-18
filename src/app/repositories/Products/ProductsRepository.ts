@@ -6,7 +6,7 @@ export default class ProductsRepository {
   static async findAll() {
     try {
       const products = await Product.findAll({
-        attributes: ['nome', 'cor', 'valor', 'tamanho'],
+        attributes: ['id', 'nome', 'cor', 'valor', 'tamanho'],
       });
       return products;
     } catch (err) {
