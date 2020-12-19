@@ -33,3 +33,6 @@ para executar os testes não é necessário rodar as migrations apenas instalar 
 ```sh
   npm run test
 ```
+
+## Documentação
+As rotas foram criadas utilizando o postman e o arquivo exportão é o ***vipcommerce.postman_collection.json***
