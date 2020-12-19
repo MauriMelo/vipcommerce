@@ -1,10 +1,13 @@
-import { number } from 'yup/lib/locale';
+import PDFkit from 'pdfkit';
+import moment from 'moment';
+import fs from 'fs';
 import OrdersException from './OrdersException';
 import Response from '../../Response';
 import Order, { IOrder } from '../../models/Order';
 import CustomerRepository from '../Customers/CustomersRepository';
 import OrderItem, { IOrderItem } from '../../models/OrderItem';
 import Product from '../../models/Product';
+import config from '../../../config/app';
 
 export default class OrdersRepository {
   static async findAll() {
@@ -185,5 +188,37 @@ export default class OrdersRepository {
         'Falha ao excluir pedido'
       );
     }
+  }
+
+  static pdfGererate(order: any) {
+    const pdf = new PDFkit();
+    pdf.fontSize(18).text('Dados do pedido');
+    pdf.fontSize(12).text(`Data: ${moment(order.data).format('DD/MM/YYYY')}`);
+    pdf.fontSize(12).text(`forma pagamento: ${order.pagamento}`);
+    pdf.fontSize(12).text(`observação: ${order.observacao}`);
+    pdf
+      .fontSize(12)
+      .text(
+        `Total: ${order.items.reduce(
+          (total: number, i: any) => total + i.product.valor * i.quantidade,
+          0
+        )}`
+      );
+    pdf.fontSize(18).text('Dados do cliente', undefined, 155);
+    pdf.fontSize(12).text(`Nome: ${order.customer.nome}`);
+    pdf.fontSize(12).text(`E-mail: ${order.customer.email}`);
+    pdf.fontSize(12).text(`Cpf: ${order.customer.cpf}`);
+    pdf
+      .fontSize(12)
+      .text(`Sexo: ${order.customer.sexo === 'm' ? 'Masculino' : 'Feminio'}`);
+    pdf.fontSize(18).text('Itens', undefined, 240);
+    order.items.forEach((item: any) => {
+      pdf.fontSize(12).text(`Nome: ${item.product.nome}`);
+      pdf.fontSize(12).text(`Valor: ${item.product.valor}`);
+      pdf.fontSize(12).text(`Quantidade: ${item.quantidade}`);
+    });
+
+    pdf.pipe(fs.createWriteStream(`${config.pdfDir}/pdf.pdf`));
+    pdf.end();
   }
 }

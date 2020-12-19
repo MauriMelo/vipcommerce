@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser';
 import express, { Request, Response } from 'express';
+import { resolve } from 'path';
 import database from '../database';
 import router from './routes';
 
@@ -13,6 +14,7 @@ class App {
     this.database = database;
     this.server.use(bodyParser.json());
     this.server.use(router);
+    this.server.use('/public', express.static(resolve(__dirname, '../public')));
     this.handleException();
   }
 

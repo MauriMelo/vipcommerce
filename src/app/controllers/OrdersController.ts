@@ -6,6 +6,7 @@ import Response from '../Response';
 import OrdersRepository from '../repositories/Orders/OrdersRepository';
 import OrdersException from '../repositories/Orders/OrdersException';
 import CustomersException from '../repositories/Customers/CustomersException';
+import config from '../../config/app';
 
 export default class OrdersController {
   static async index(request: Request, response: ResponseExpress) {
@@ -231,6 +232,34 @@ export default class OrdersController {
   }
 
   static async report(request: Request, response: ResponseExpress) {
-    return response.json({});
+    const { id } = request.params;
+    let order;
+    try {
+      order = (await OrdersRepository.find(parseInt(id, 10))) as any;
+    } catch (err) {
+      if (err instanceof OrdersException) {
+        return response
+          .status(err.code)
+          .json(Response.errorResponse(err.code, err.message));
+      }
+      return response
+        .status(Response.INTERNAL_SERVER_ERROR)
+        .json(Response.errorResponse());
+    }
+
+    if (order.forma_pagamento === 1) {
+      order.pagamento = 'dinheiro';
+    } else if (order.forma_pagamento === 2) {
+      order.pagamento = 'cartão';
+    } else {
+      order.pagamento = 'cheque';
+    }
+
+    OrdersRepository.pdfGererate(order);
+    return response.json({
+      data: {
+        link: `${config.hostname}/public/pdf.pdf`,
+      },
+    });
   }
 }
