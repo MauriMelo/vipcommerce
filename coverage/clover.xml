@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1608338290978" clover="3.2.0">
-  <project timestamp="1608338290979" name="All files">
-    <metrics statements="1312" coveredstatements="1053" conditionals="87" coveredconditionals="69" methods="53" coveredmethods="41" elements="1452" coveredelements="1163" complexity="0" loc="1312" ncloc="1312" packages="10" files="22" classes="22"/>
+<coverage generated="1608339786517" clover="3.2.0">
+  <project timestamp="1608339786517" name="All files">
+    <metrics statements="1310" coveredstatements="1051" conditionals="87" coveredconditionals="69" methods="53" coveredmethods="41" elements="1450" coveredelements="1161" complexity="0" loc="1310" ncloc="1310" packages="10" files="22" classes="22"/>
     <package name="__tests__.helpers">
-      <metrics statements="16" coveredstatements="16" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
       <file name="database.ts" path="/home/maurimelo/dev/vipcommerce/__tests__/helpers/database.ts">
-        <metrics statements="16" coveredstatements="16" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="9" count="5" type="cond" truecount="1" falsecount="0"/>
-        <line num="10" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="7" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="8" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="10" count="5" type="stmt"/>
         <line num="11" count="5" type="stmt"/>
         <line num="12" count="5" type="stmt"/>
         <line num="13" count="5" type="stmt"/>
         <line num="14" count="5" type="stmt"/>
-        <line num="15" count="5" type="stmt"/>
-        <line num="16" count="5" type="stmt"/>
       </file>
     </package>
     <package name="src.app">
