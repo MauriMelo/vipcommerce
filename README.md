@@ -35,4 +35,4 @@ para executar os testes não é necessário rodar as migrations apenas instalar 
 ```
 
 ## Documentação
-As rotas foram criadas utilizando o postman e o arquivo exportão é o ***vipcommerce.postman_collection.json***
+As rotas foram criadas utilizando o postman e o arquivo exportado é o ***vipcommerce.postman_collection.json***
